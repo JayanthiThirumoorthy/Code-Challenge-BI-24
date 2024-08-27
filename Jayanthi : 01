@@ -1,0 +1,85 @@
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
+public class Calculator {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        boolean continueCalculating = true;
+
+        while (continueCalculating) {
+            double num1 = 0;
+            double num2 = 0;
+            String operator = "";
+
+            // Input first number with validation
+            while (true) {
+                try {
+                    System.out.print("Enter first number: ");
+                    num1 = scanner.nextDouble();
+                    break; // Exit the loop if input is valid
+                } catch (InputMismatchException e) {
+                    System.out.println("Error: Invalid input. Please enter a valid number.");
+                    scanner.next(); // Clear the invalid input
+                }
+            }
+
+            // Input second number with validation
+            while (true) {
+                try {
+                    System.out.print("Enter second number: ");
+                    num2 = scanner.nextDouble();
+                    break; // Exit the loop if input is valid
+                } catch (InputMismatchException e) {
+                    System.out.println("Error: Invalid input. Please enter a valid number.");
+                    scanner.next(); // Clear the invalid input
+                }
+            }
+
+            // Input operator with validation
+            while (true) {
+                System.out.print("Enter operator (+, -, *, /): ");
+                operator = scanner.next();
+                if (operator.equals("+") || operator.equals("-") || operator.equals("*") || operator.equals("/")) {
+                    break; // Exit the loop if input is valid
+                } else {
+                    System.out.println("Error: Invalid operator. Please enter +, -, *, or /.");
+                }
+            }
+
+            double result = 0;
+
+            // Perform calculation based on operator
+            switch (operator) {
+                case "+":
+                    result = num1 + num2;
+                    break;
+                case "-":
+                    result = num1 - num2;
+                    break;
+                case "*":
+                    result = num1 * num2;
+                    break;
+                case "/":
+                    if (num2 != 0) {
+                        result = num1 / num2;
+                    } else {
+                        System.out.println("Error: Division by zero is not allowed.");
+                        continue; // Continue to the next iteration of the loop
+                    }
+                    break;
+            }
+
+            System.out.println("Result: " + result);
+
+            // Ask if user wants to perform another calculation
+            System.out.print("Do you want to perform another calculation? (yes/no): ");
+            String response = scanner.next();
+            if (response.equalsIgnoreCase("no")) {
+                continueCalculating = false;
+            }
+        }
+
+        System.out.println("Thank you for using the calculator.");
+        scanner.close();
+    }
+}
